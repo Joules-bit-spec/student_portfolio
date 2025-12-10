@@ -1,0 +1,31 @@
+{% extends "layout.html" %} {% block title %}Profile{% endblock %} {% block
+content %}
+<h2>Profile</h2>
+<form method="POST">
+  <label>Username:</label><br /><input
+    type="text"
+    name="username"
+    value="{{ 
+current_user.username }}"
+  /><br />
+  <label>Course:</label><br /><input
+    type="text"
+    name="course"
+    value="{{ 
+current_user.course }}"
+  /><br />
+  <label>Bio:</label><br /><textarea name="bio">
+{{ current_user.bio 
+}}</textarea
+  ><br />
+  <button type="submit">Save</button>
+</form>
+<p>
+  <a
+    href="{{ url_for('public_portfolio', username=current_user.username) 
+}}"
+    target="_blank"
+    >View Public Portfolio</a
+  >
+</p>
+{% endblock %}

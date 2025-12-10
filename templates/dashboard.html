@@ -1,0 +1,27 @@
+{% extends "layout.html" %} {% block title %}Dashboard{% endblock %} {% block
+content %}
+<div class="content">
+  <h2 class="page-title">Hello, {{ current_user.username }}!</h2>
+  <p>
+    <a
+      href="{{ url_for('public_portfolio', username=current_user.username) }}"
+      target="_blank"
+      class="btn-link"
+    >
+      View My Public Portfolio
+    </a>
+  </p>
+
+  <h3>Your Projects</h3>
+  <ul class="project-list">
+    {% for p in projects %}
+    <li class="project-item">
+      {{ p.title }} -
+      <a href="{{ url_for('edit_project', id=p.id) }}" class="btn-edit">Edit</a>
+    </li>
+    {% else %}
+    <li>No projects yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

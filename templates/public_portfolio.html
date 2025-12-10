@@ -1,0 +1,90 @@
+{% extends "layout.html" %} {% block title %}Public Portfolio{% endblock %} {%
+block content %}
+<div class="portfolio-container">
+  <h2 class="portfolio-title">
+    {{ current_user.username }}'s Public Portfolio
+  </h2>
+
+  <!-- Add New Project Section -->
+  <div class="project-form-section">
+    <h3 class="section-title">Add New Project</h3>
+    <form method="POST" enctype="multipart/form-data" class="project-form">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-input"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-input"
+          rows="4"
+          required
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="image">Image:</label>
+        <input
+          type="file"
+          id="image"
+          name="image"
+          class="form-input"
+          accept="image/*"
+        />
+      </div>
+      <button type="submit" class="btn-submit">Add Project</button>
+    </form>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- Existing Projects Section -->
+  <div class="existing-projects">
+    <h3 class="section-title">Your Projects</h3>
+    {% if projects %}
+    <div class="projects-list">
+      {% for p in projects %}
+      <div class="project-card">
+        <div class="project-image">
+          {% if p.image_file %}
+          <img
+            src="{{ url_for('static', filename='uploads/' + p.image_file) }}"
+            alt="{{ p.title }}"
+          />
+          {% else %}
+          <p>No Image</p>
+          {% endif %}
+        </div>
+        <div class="project-details">
+          <h4 class="project-title">{{ p.title }}</h4>
+          <p class="project-description">{{ p.description }}</p>
+          <p class="project-date">{{ p.date_posted.strftime('%Y-%m-%d') }}</p>
+        </div>
+        <div class="project-actions">
+          <a href="{{ url_for('edit_project', id=p.id) }}" class="btn-link"
+            >Edit</a
+          >
+          |
+          <a
+            href="{{ url_for('delete_project', id=p.id) }}"
+            class="btn-link"
+            onclick="return confirm('Delete this project?')"
+            >Delete</a
+          >
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No projects yet. Start adding your projects!</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
