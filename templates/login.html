@@ -1,18 +1,63 @@
 {% extends "layout.html" %} {% block title %}Login{% endblock %} {% block
 content %}
-<h2>Login</h2>
-<form method="POST">
-  <div class="form-group">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required />
+<div style="min-height: calc(100vh - 200px); display: flex; align-items: center; justify-content: center; padding: 20px;">
+  <div style="width: 100%; max-width: 450px;">
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 40px;">
+      <h2 style="margin: 0 0 10px 0; color: #333; font-size: 28px;">Welcome Back!</h2>
+      <p class="text-muted" style="margin: 0;">Sign in to your account</p>
+    </div>
+
+    <!-- Login Card -->
+    <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+      <form method="POST">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            placeholder="you@example.com"
+            required 
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Enter your password"
+            required 
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 16px; font-weight: 600;">
+          Sign In
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div style="text-align: center; margin: 25px 0; position: relative;">
+        <span style="background: white; padding: 0 10px; color: #999; font-size: 14px;">OR</span>
+      </div>
+
+      <!-- Sign Up Link -->
+      <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
+        <p class="text-muted" style="margin: 0;">Don't have an account?</p>
+        <a href="{{ url_for('register') }}" style="color: #5c4a3a; font-weight: 600; text-decoration: none; display: inline-block; margin-top: 8px;">
+          Create Account →
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin-top: 30px;">
+      <p class="text-muted" style="font-size: 12px; margin: 0;">
+        Need help? Contact us at support@example.com
+      </p>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required />
-  </div>
-  <button type="submit" class="btn btn-primary">Login</button>
-</form>
-<p class="text-muted">
-  Don't have an account? <a href="{{ url_for('register') }}" class="text-primary">Register here</a>
-</p>
+</div>
 {% endblock %}
