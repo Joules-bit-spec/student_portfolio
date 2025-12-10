@@ -1,78 +1,46 @@
-{% extends "layout.html" %} {% block title %}Register{% endblock %} {% block
-content %}
-<div style="min-height: calc(100vh - 200px); display: flex; align-items: center; justify-content: center; padding: 20px;">
-  <div style="width: 100%; max-width: 500px;">
-    <!-- Header -->
-    <div style="text-align: center; margin-bottom: 40px;">
-      <h2 style="margin: 0 0 10px 0; color: #333; font-size: 28px;">Join Us!</h2>
-      <p class="text-muted" style="margin: 0;">Create your student portfolio today</p>
+{% extends "layout.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="center-page">
+  <div class="narrow">
+    <div class="text-center" style="margin-bottom:24px;">
+      <h2 class="page-title">Join Us!</h2>
+      <p class="text-muted">Create your student portfolio today</p>
     </div>
 
-    <!-- Registration Card -->
-    <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+    <div class="card">
       <form method="POST">
-        <!-- Username Field -->
         <div class="form-group">
           <label for="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Choose a username"
-            required
-          />
+          <input type="text" id="username" name="username" placeholder="Choose a username" required />
         </div>
 
-        <!-- Email Field -->
         <div class="form-group">
           <label for="email">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="you@example.com"
-            required
-          />
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
         </div>
 
-        <!-- Password Field -->
         <div class="form-group">
           <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Create a strong password"
-            required
-          />
-          <p class="text-muted" style="font-size: 12px; margin-top: 5px;">At least 6 characters recommended</p>
+          <input type="password" id="password" name="password" placeholder="Create a strong password" required />
+          <p class="text-muted small" style="margin-top:6px">At least 6 characters recommended</p>
         </div>
 
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 16px; font-weight: 600;">
-          Create Account
-        </button>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Create Account</button>
       </form>
 
-      <!-- Divider -->
-      <div style="text-align: center; margin: 25px 0; position: relative;">
-        <span style="background: white; padding: 0 10px; color: #999; font-size: 14px;">OR</span>
+      <div class="text-center" style="margin:18px 0;">
+        <span class="small muted">OR</span>
       </div>
 
-      <!-- Login Link -->
-      <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
+      <div style="background: #f8f9fa; padding: 16px; border-radius: 8px; text-align: center;">
         <p class="text-muted" style="margin: 0;">Already have an account?</p>
-        <a href="{{ url_for('login') }}" style="color: #5c4a3a; font-weight: 600; text-decoration: none; display: inline-block; margin-top: 8px;">
-          Sign In →
-        </a>
+        <a href="{{ url_for('login') }}" class="text-accent" style="font-weight:600; display:inline-block; margin-top:8px;">Sign In →</a>
       </div>
     </div>
 
-    <!-- Terms & Privacy -->
-    <div style="text-align: center; margin-top: 30px;">
-      <p class="text-muted" style="font-size: 12px; margin: 0;">
-        By registering, you agree to our <a href="#" style="color: #5c4a3a;">Terms of Service</a> and <a href="#" style="color: #5c4a3a;">Privacy Policy</a>
-      </p>
+    <div class="text-center" style="margin-top:14px;">
+      <p class="text-muted small" style="margin:0;">By registering, you agree to our <a href="#" class="text-accent">Terms of Service</a> and <a href="#" class="text-accent">Privacy Policy</a></p>
     </div>
   </div>
 </div>

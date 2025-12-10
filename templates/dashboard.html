@@ -1,71 +1,63 @@
-{% extends "layout.html" %} {% block title %}Dashboard{% endblock %} {% block
-content %}
-<div style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
-  <h2 style="margin-bottom: 10px;">Welcome back, {{ current_user.username }}! 👋</h2>
-  <p class="text-muted" style="margin-bottom: 30px;">Here's an overview of your portfolio</p>
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="container">
+  <h2 class="page-title">Welcome back, {{ current_user.username }}! 👋</h2>
+  <p class="text-muted" style="margin-bottom: 20px;">Here's an overview of your portfolio</p>
 
   <!-- Dashboard Stats -->
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 40px;">
+  <div class="dashboard-stats">
     <div class="stat-card">
-      <h3 style="margin: 0; font-size: 32px; color: #5c4a3a;">{{ projects|length }}</h3>
-      <p style="margin: 5px 0 0 0; color: #666;">Projects</p>
+      <h3>{{ projects|length }}</h3>
+      <p>Projects</p>
     </div>
     <div class="stat-card">
-      <h3 style="margin: 0; font-size: 32px; color: #5c4a3a;">✓</h3>
-      <p style="margin: 5px 0 0 0; color: #666;">Status: Active</p>
+      <h3>✓</h3>
+      <p>Status: Active</p>
     </div>
     <div class="stat-card">
-      <h3 style="margin: 0; font-size: 32px; color: #5c4a3a;">{{ current_user.course[:10] or 'N/A' }}</h3>
-      <p style="margin: 5px 0 0 0; color: #666;">Course</p>
+      <h3>{{ current_user.course[:10] or 'N/A' }}</h3>
+      <p>Course</p>
     </div>
   </div>
 
   <!-- Quick Action Buttons -->
-  <div style="display: flex; gap: 10px; margin-bottom: 40px; flex-wrap: wrap;">
-    <a href="{{ url_for('projects') }}" class="btn btn-primary" style="background-color: #28a745; flex: 1; min-width: 150px;">
-      ➕ Add Project
-    </a>
-    <a href="{{ url_for('public_portfolio', username=current_user.username) }}" target="_blank" class="btn btn-primary" style="flex: 1; min-width: 150px;">
-      👁️ View Portfolio
-    </a>
-    <a href="{{ url_for('profile') }}" class="btn btn-primary" style="background-color: #6c757d; flex: 1; min-width: 150px;">
-      ⚙️ Edit Profile
-    </a>
+  <div style="display:flex; gap:10px; margin:20px 0; flex-wrap:wrap;">
+    <a href="{{ url_for('projects') }}" class="btn btn-success" style="flex:1; min-width:150px;">➕ Add Project</a>
+    <a href="{{ url_for('public_portfolio', username=current_user.username) }}" target="_blank" class="btn btn-primary" style="flex:1; min-width:150px;">👁️ View Portfolio</a>
+    <a href="{{ url_for('profile') }}" class="btn btn-secondary" style="flex:1; min-width:150px;">⚙️ Edit Profile</a>
   </div>
 
   <!-- Your Projects Section -->
-  <h3 style="margin-bottom: 20px; font-size: 20px;">Your Recent Projects</h3>
+  <h3 style="margin-bottom:12px;">Your Recent Projects</h3>
   {% if projects %}
-  <div style="display: flex; flex-direction: column; gap: 12px;">
+  <div style="display:flex; flex-direction:column; gap:12px;">
     {% for p in projects %}
-    <div style="background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 20px; transition: all 0.3s ease; border-left: 4px solid #5c4a3a;">
-      <!-- Project Image -->
-      <div style="width: 80px; height: 80px; flex-shrink: 0; background-color: #f0f0f0; border-radius: 6px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+    <div class="list-card">
+      <div style="width:80px; height:80px; flex-shrink:0; border-radius:6px; overflow:hidden; display:flex; align-items:center; justify-content:center; background:#f0f0f0;">
         {% if p.image_file %}
-        <img src="{{ url_for('static', filename='uploads/' + p.image_file) }}" alt="{{ p.title }}" style="width: 100%; height: 100%; object-fit: cover;" />
+        <img src="{{ url_for('static', filename='uploads/' + p.image_file) }}" alt="{{ p.title }}" style="width:100%; height:100%; object-fit:cover;" />
         {% else %}
-        <span style="color: #999; font-size: 12px;">No Image</span>
+        <div class="no-image">No Image</div>
         {% endif %}
       </div>
 
-      <!-- Project Details -->
-      <div style="flex: 1; min-width: 0;">
-        <h4 style="margin: 0 0 5px 0; color: #333; font-size: 16px;">{{ p.title }}</h4>
-        <p style="margin: 0 0 8px 0; color: #666; font-size: 14px; line-height: 1.4;">{{ p.description[:80] }}{% if p.description|length > 80 %}...{% endif %}</p>
-        <p class="text-muted" style="font-size: 12px; margin: 0;">📅 {{ p.date_posted.strftime('%b %d, %Y') }}</p>
+      <div style="flex:1; min-width:0;">
+        <h4 style="margin:0 0 5px 0;">{{ p.title }}</h4>
+        <p class="muted small" style="margin:0 0 8px 0;">{{ p.description[:80] }}{% if p.description|length > 80 %}...{% endif %}</p>
+        <p class="text-muted" style="font-size:12px; margin:0;">📅 {{ p.date_posted.strftime('%b %d, %Y') }}</p>
       </div>
 
-      <!-- Action -->
-      <div style="flex-shrink: 0;">
-        <a href="{{ url_for('edit_project', id=p.id) }}" class="btn btn-primary" style="padding: 8px 16px; font-size: 14px;">Edit</a>
+      <div style="flex-shrink:0;">
+        <a href="{{ url_for('edit_project', id=p.id) }}" class="btn btn-primary">Edit</a>
       </div>
     </div>
     {% endfor %}
   </div>
   {% else %}
-  <div style="background: white; padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-    <p class="text-muted" style="font-size: 16px; margin: 0;">You haven't created any projects yet.</p>
-    <p style="margin-top: 10px;"><a href="{{ url_for('projects') }}" class="text-primary" style="font-weight: 600;">Create your first project →</a></p>
+  <div class="card text-center">
+    <p class="text-muted" style="margin:0;">You haven't created any projects yet.</p>
+    <p style="margin-top:10px;"><a href="{{ url_for('projects') }}" class="text-primary" style="font-weight:600;">Create your first project →</a></p>
   </div>
   {% endif %}
 </div>
