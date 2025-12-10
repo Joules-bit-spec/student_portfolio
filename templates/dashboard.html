@@ -1,27 +1,71 @@
 {% extends "layout.html" %} {% block title %}Dashboard{% endblock %} {% block
 content %}
 <div class="content">
-  <h2 class="page-title">Hello, {{ current_user.username }}!</h2>
-  <p>
+  <h2>Welcome, {{ current_user.username }}! 👋</h2>
+
+  <!-- Dashboard Stats -->
+  <div class="dashboard-stats">
+    <div class="stat-card">
+      <h3>{{ projects|length }}</h3>
+      <p>Projects Created</p>
+    </div>
+    <div class="stat-card">
+      <h3>{{ current_user.course or 'N/A' }}</h3>
+      <p>Course</p>
+    </div>
+    <div class="stat-card">
+      <h3>Active</h3>
+      <p>Status</p>
+    </div>
+  </div>
+
+  <!-- Quick Action -->
+  <div class="mb-20">
     <a
       href="{{ url_for('public_portfolio', username=current_user.username) }}"
       target="_blank"
-      class="btn-link"
+      class="btn btn-primary"
     >
       View My Public Portfolio
     </a>
-  </p>
+    <a
+      href="{{ url_for('projects') }}"
+      class="btn btn-primary"
+      style="margin-left: 10px; background-color: #28a745;"
+    >
+      Add New Project
+    </a>
+  </div>
 
+  <!-- Your Projects -->
   <h3>Your Projects</h3>
-  <ul class="project-list">
+  {% if projects %}
+  <div class="projects-grid">
     {% for p in projects %}
-    <li class="project-item">
-      {{ p.title }} -
-      <a href="{{ url_for('edit_project', id=p.id) }}" class="btn-edit">Edit</a>
-    </li>
-    {% else %}
-    <li>No projects yet.</li>
+    <div class="project-card">
+      <div class="project-card-image" style="background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+        {% if p.image_file %}
+        <img
+          src="{{ url_for('static', filename='uploads/' + p.image_file) }}"
+          alt="{{ p.title }}"
+        />
+        {% else %}
+        <span style="color: #999;">No Image</span>
+        {% endif %}
+      </div>
+      <div class="project-card-content">
+        <h4 class="project-card-title">{{ p.title }}</h4>
+        <p class="project-card-description">{{ p.description[:100] }}...</p>
+        <p class="text-muted" style="font-size: 12px;">{{ p.date_posted.strftime('%Y-%m-%d') }}</p>
+      </div>
+      <div class="project-card-footer">
+        <a href="{{ url_for('edit_project', id=p.id) }}">Edit</a>
+      </div>
+    </div>
     {% endfor %}
-  </ul>
+  </div>
+  {% else %}
+  <p class="text-muted">No projects yet. <a href="{{ url_for('projects') }}" class="text-primary">Create your first project</a></p>
+  {% endif %}
 </div>
 {% endblock %}

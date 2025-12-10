@@ -1,36 +1,65 @@
-{% block title %}Admin Dashboard{% endblock %} {% block content %}
+{% extends "layout.html" %} {% block title %}Admin Dashboard{% endblock %} {% block content %}
 <h2>Admin Dashboard</h2>
-<h3>Users</h3>
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Username</th>
-    <th>Email</th>
-    <th>Course</th>
-  </tr>
-  {% for u in users %}
-  <tr>
-    <td>{{ u.id }}</td>
-    <td>{{ u.username }}</td>
-    <td>{{ u.email }}</td>
-    <td>{{ u.course or '-' }}</td>
-  </tr>
-  {% endfor %}
-</table>
-<hr />
-<h3>All Projects</h3>
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Owner</th>
-  </tr>
-  {% for p in projects %}
-  <tr>
-    <td>{{ p.id }}</td>
-    <td>{{ p.title }}</td>
-    <td>{{ p.user_id }}</td>
-  </tr>
-  {% endfor %}
-</table>
+
+<!-- Dashboard Stats -->
+<div class="dashboard-stats">
+  <div class="stat-card">
+    <h3>{{ users|length }}</h3>
+    <p>Total Users</p>
+  </div>
+  <div class="stat-card">
+    <h3>{{ projects|length }}</h3>
+    <p>Total Projects</p>
+  </div>
+  <div class="stat-card">
+    <h3>{{ (projects|length / (users|length or 1))|round(1) }}</h3>
+    <p>Avg Projects/User</p>
+  </div>
+</div>
+
+<!-- Users Section -->
+<div class="mb-20">
+  <h3>Users</h3>
+  <div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr style="background-color: #f5f5f5; font-weight: 600;">
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">ID</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Username</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Email</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Course</th>
+      </tr>
+      {% for u in users %}
+      <tr style="border-bottom: 1px solid #ddd;">
+        <td style="padding: 12px;">{{ u.id }}</td>
+        <td style="padding: 12px;">{{ u.username }}</td>
+        <td style="padding: 12px;">{{ u.email }}</td>
+        <td style="padding: 12px;">{{ u.course or '-' }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+<!-- Projects Section -->
+<div class="mb-20">
+  <h3>All Projects</h3>
+  <div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr style="background-color: #f5f5f5; font-weight: 600;">
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">ID</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Title</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Owner</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Date</th>
+      </tr>
+      {% for p in projects %}
+      <tr style="border-bottom: 1px solid #ddd;">
+        <td style="padding: 12px;">{{ p.id }}</td>
+        <td style="padding: 12px;">{{ p.title }}</td>
+        <td style="padding: 12px;">{{ p.user_id }}</td>
+        <td style="padding: 12px;">{{ p.date_posted.strftime('%Y-%m-%d') }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
 {% endblock %}

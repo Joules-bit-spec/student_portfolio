@@ -1,33 +1,34 @@
 {% extends "layout.html" %} {% block title %}Edit Project{% endblock %} {% block
 content %}
 <div class="content">
-  <h2 class="page-title">Edit Project</h2>
-  <form method="POST" class="form-container">
+  <h2>Edit Project</h2>
+  <form method="POST">
     <!-- Title Field -->
-    <label for="title" class="form-label">Project Title</label>
-    <input
-      type="text"
-      name="title"
-      id="title"
-      value="{{ project.title }}"
-      class="form-input"
-      required
-    />
+    <div class="form-group">
+      <label for="title">Project Title</label>
+      <input
+        type="text"
+        name="title"
+        id="title"
+        value="{{ project.title }}"
+        required
+      />
+    </div>
 
     <!-- Description Field -->
-    <label for="description" class="form-label">Description</label>
-    <textarea
-      name="description"
-      id="description"
-      class="form-input"
-      rows="4"
-      required
-    >
-{{ project.description }}</textarea
-    >
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        name="description"
+        id="description"
+        rows="4"
+        required
+      >{{ project.description }}</textarea>
+    </div>
 
     <!-- Save Button -->
-    <button type="submit" class="btn-submit">Save</button>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="{{ url_for('projects') }}" class="btn btn-primary" style="background-color: #6c757d; margin-left: 10px;">Cancel</a>
   </form>
 </div>
 {% endblock %}
