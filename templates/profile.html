@@ -4,7 +4,11 @@
 <div class="narrow-md">
   <!-- Profile Card Header -->
   <div class="text-center" style="margin-bottom: 20px;">
-    <div class="profile-avatar" style="margin: 0 auto 12px; background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%); color: white; font-size: 44px; font-weight: bold; display:flex; align-items:center; justify-content:center;">{{ current_user.username[0].upper() }}</div>
+    {% if current_user.profile_picture %}
+    <img src="{{ url_for('static', filename='uploads/' + current_user.profile_picture) }}" alt="{{ current_user.username }}" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin:0 auto 12px; border:3px solid #D4AF37; box-shadow:0 4px 12px rgba(0,0,0,0.15);" />
+    {% else %}
+    <div class="profile-avatar" style="margin: 0 auto 12px; background: linear-gradient(135deg, #8B6F47 0%, #D4AF37 100%); color: white; font-size: 44px; font-weight: bold; display:flex; align-items:center; justify-content:center;">{{ current_user.username[0].upper() }}</div>
+    {% endif %}
     <h2 style="margin: 0 0 5px 0;">{{ current_user.username }}</h2>
     <p class="profile-bio" style="margin: 0;">{{ current_user.course or 'Student' }}</p>
   </div>
@@ -12,7 +16,13 @@
   <div class="card" style="margin-bottom:16px;">
     <h3 style="margin-top:0; margin-bottom:16px; color:var(--primary-color);">Edit Profile</h3>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="profile_picture">Profile Picture</label>
+        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" />
+        <p class="text-muted small" style="margin-top:6px;">Upload a photo (JPG, PNG, GIF - optional)</p>
+      </div>
+
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" value="{{ current_user.username }}" required />
@@ -25,7 +35,38 @@
 
       <div class="form-group">
         <label for="bio">Bio</label>
-        <textarea id="bio" name="bio">{{ current_user.bio }}</textarea>
+        <textarea id="bio" name="bio">{{ current_user.bio or '' }}</textarea>
+      </div>
+
+      <hr style="margin: 24px 0; border: none; border-top: 2px solid #ddd;">
+      <h4 style="margin-top: 20px; color: var(--primary-color);">Contact Information</h4>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" value="{{ current_user.phone or '' }}" placeholder="e.g., +1 (555) 123-4567" />
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address</label>
+        <textarea id="address" name="address" placeholder="e.g., 123 Main St, City, State, ZIP">{{ current_user.address or '' }}</textarea>
+      </div>
+
+      <hr style="margin: 24px 0; border: none; border-top: 2px solid #ddd;">
+      <h4 style="margin-top: 20px; color: var(--primary-color);">Professional Information</h4>
+
+      <div class="form-group">
+        <label for="skills">Skills</label>
+        <textarea id="skills" name="skills" placeholder="e.g., Python, JavaScript, Web Design, UI/UX&#10;(One skill per line or comma-separated)">{{ current_user.skills or '' }}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="education">Education</label>
+        <textarea id="education" name="education" placeholder="e.g., Bachelor of Science in Computer Science&#10;University Name, Graduation Year">{{ current_user.education or '' }}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="experience">Experience</label>
+        <textarea id="experience" name="experience" placeholder="e.g., Software Developer at XYZ Company (2020-2023)&#10;Freelance Web Designer (2023-Present)">{{ current_user.experience or '' }}</textarea>
       </div>
 
       <div style="display:flex; gap:10px; margin-top:12px;">

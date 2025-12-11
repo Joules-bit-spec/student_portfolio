@@ -40,7 +40,7 @@
 
       <div class="project-body">
         <h4 style="margin:0 0 8px 0;">{{ p.title }}</h4>
-        <p class="muted small" style="margin:0 0 8px 0;">{{ p.description[:100] }}{% if p.description|length > 100 %}...{% endif %}</p>
+        <p class="muted small" style="margin:0 0 8px 0;">{{ (p.description or '')[:100] }}{% if p.description and p.description|length > 100 %}...{% endif %}</p>
         <p class="text-muted" style="font-size:12px; margin:0;">📅 {{ p.date_posted.strftime('%b %d, %Y') }}</p>
       </div>
 

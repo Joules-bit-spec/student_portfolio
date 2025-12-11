@@ -1,14 +1,17 @@
 /* CSS Custom Properties for Better Maintainability */
 :root {
-  --primary-color: #5c4a3a;
-  --accent-color: #e4b169;
-  --accent-dark: #d78f44;
+  --primary-color: #8B6F47;
+  --accent-color: #D4AF37;
+  --accent-dark: #C89F34;
   --danger-color: #dc3545;
   --success-color: #28a745;
   --info-color: #0c5460;
   --light-bg: #f5f5f5;
   --white: #ffffff;
   --dark-text: #333333;
+  --gradient-primary: linear-gradient(135deg, #8B6F47 0%, #D4AF37 100%);
+  --gradient-dark: linear-gradient(135deg, #6B5437 0%, #8B6F47 100%);
+  --gradient-light: linear-gradient(135deg, #D4AF37 0%, #F4E4B9 100%);
   --spacing-unit: 8px;
   --transition: 0.3s ease;
 }
@@ -137,7 +140,7 @@ h4 {
 
 /* Navbar Styles */
 .navbar {
-  background-color: var(--primary-color);
+  background: linear-gradient(135deg, #6B5437 0%, #8B6F47 100%);
   position: sticky;
   top: 0;
   width: 100%;
@@ -379,7 +382,7 @@ textarea {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color: var(--accent-color);
+  background: linear-gradient(135deg, #8B6F47 0%, #D4AF37 100%);
   object-fit: cover;
 }
 
@@ -401,7 +404,7 @@ textarea {
 }
 
 .stat-card {
-  background-color: var(--light-bg);
+  background: linear-gradient(135deg, #D4AF37 0%, #F4E4B9 100%);
   padding: 20px;
   border-radius: 8px;
   text-align: center;

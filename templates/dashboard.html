@@ -28,8 +28,33 @@
     <a href="{{ url_for('profile') }}" class="btn btn-secondary" style="flex:1; min-width:150px;">⚙️ Edit Profile</a>
   </div>
 
+  <!-- Profile Summary Section -->
+  <div class="card" style="margin-top:30px; background: linear-gradient(135deg, #D4AF37 0%, #F4E4B9 100%);">
+    <div style="display:flex; align-items:center; gap:20px;">
+      {% if current_user.profile_picture %}
+      <img src="{{ url_for('static', filename='uploads/' + current_user.profile_picture) }}" alt="{{ current_user.username }}" style="width:80px; height:80px; border-radius:50%; object-fit:cover; flex-shrink:0; border:3px solid #8B6F47;" />
+      {% else %}
+      <div style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, #8B6F47 0%, #D4AF37 100%); display:flex; align-items:center; justify-content:center; color:white; font-size:36px; font-weight:bold; flex-shrink:0;">
+        {{ current_user.username[0].upper() }}
+      </div>
+      {% endif %}
+      <div style="flex:1;">
+        <h3 style="margin:0 0 4px 0; color:#333;">{{ current_user.username }}</h3>
+        <p style="margin:0 0 6px 0; color:#666; font-size:14px;">{{ current_user.course or 'Student' }}</p>
+        {% if current_user.bio %}
+        <p style="margin:0; color:#666; font-size:13px; line-height:1.5;">{{ current_user.bio }}</p>
+        {% else %}
+        <p style="margin:0; color:#999; font-size:13px; font-style:italic;">No bio yet. <a href="{{ url_for('profile') }}" style="color:#8B6F47; font-weight:600;">Add one →</a></p>
+        {% endif %}
+      </div>
+      <div style="flex-shrink:0;">
+        <a href="{{ url_for('profile') }}" class="btn btn-primary">Edit</a>
+      </div>
+    </div>
+  </div>
+
   <!-- Your Projects Section -->
-  <h3 style="margin-bottom:12px;">Your Recent Projects</h3>
+  <h3 style="margin-bottom:12px; margin-top:30px;">Your Recent Projects</h3>
   {% if projects %}
   <div style="display:flex; flex-direction:column; gap:12px;">
     {% for p in projects %}
@@ -44,7 +69,7 @@
 
       <div style="flex:1; min-width:0;">
         <h4 style="margin:0 0 5px 0;">{{ p.title }}</h4>
-        <p class="muted small" style="margin:0 0 8px 0;">{{ p.description[:80] }}{% if p.description|length > 80 %}...{% endif %}</p>
+        <p class="muted small" style="margin:0 0 8px 0;">{{ (p.description or '')[:80] }}{% if p.description and p.description|length > 80 %}...{% endif %}</p>
         <p class="text-muted" style="font-size:12px; margin:0;">📅 {{ p.date_posted.strftime('%b %d, %Y') }}</p>
       </div>
 

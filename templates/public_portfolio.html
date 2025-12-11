@@ -5,7 +5,10 @@
 {% block content %}
 <div class="container">
   <!-- Header -->
-  <div class="profile-header" style="margin-bottom:18px;">
+  <div class="profile-header" style="margin-bottom:18px; display:flex; align-items:center; gap:20px;">
+    {% if user.profile_picture %}
+    <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="{{ user.username }}" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:3px solid #D4AF37; flex-shrink:0;" />
+    {% endif %}
     <div>
       <h1 style="margin:0 0 6px 0;">{{ user.username }}'s Portfolio</h1>
       <p class="text-muted" style="margin:0;">{{ user.course or 'Student' }}</p>
@@ -13,6 +16,56 @@
       <p style="max-width:640px; margin:8px 0 0 0; color:var(--dark-text);">{{ user.bio }}</p>
       {% endif %}
     </div>
+  </div>
+
+  <!-- Contact & Professional Information Section -->
+  <div class="card" style="margin-bottom:24px; background: linear-gradient(135deg, #D4AF37 0%, #F4E4B9 100%);">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+      {% if user.phone or user.address or user.email %}
+      <div>
+        <h4 style="margin: 0 0 12px 0; color: var(--primary-color);">📞 Contact Information</h4>
+        {% if user.phone %}
+        <p style="margin: 0 0 8px 0;"><strong>Phone:</strong> {{ user.phone }}</p>
+        {% endif %}
+        {% if user.email %}
+        <p style="margin: 0 0 8px 0;"><strong>Email:</strong> <a href="mailto:{{ user.email }}" style="color: var(--primary-color); text-decoration: underline;">{{ user.email }}</a></p>
+        {% endif %}
+        {% if user.address %}
+        <p style="margin: 0; color: #666;"><strong>Address:</strong><br>{{ user.address }}</p>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {% if user.education %}
+      <div>
+        <h4 style="margin: 0 0 12px 0; color: var(--primary-color);">🎓 Education</h4>
+        <p style="margin: 0; color: #666; white-space: pre-line;">{{ user.education }}</p>
+      </div>
+      {% endif %}
+    </div>
+
+    {% if user.skills %}
+    <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid rgba(139, 111, 71, 0.2);">
+      <h4 style="margin: 0 0 12px 0; color: var(--primary-color);">💡 Skills</h4>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        {% for skill in user.skills.split('\n') if skill.strip() %}
+        <span style="background: rgba(139, 111, 71, 0.2); color: var(--primary-color); padding: 8px 14px; border-radius: 20px; font-size: 14px; font-weight: 600;">{{ skill.strip() }}</span>
+        {% endfor %}
+        {% if '\n' not in user.skills %}
+          {% for skill in user.skills.split(',') if skill.strip() %}
+          <span style="background: rgba(139, 111, 71, 0.2); color: var(--primary-color); padding: 8px 14px; border-radius: 20px; font-size: 14px; font-weight: 600;">{{ skill.strip() }}</span>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if user.experience %}
+    <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid rgba(139, 111, 71, 0.2);">
+      <h4 style="margin: 0 0 12px 0; color: var(--primary-color);">💼 Experience</h4>
+      <p style="margin: 0; color: #666; white-space: pre-line; line-height: 1.6;">{{ user.experience }}</p>
+    </div>
+    {% endif %}
   </div>
 
   {% if current_user.is_authenticated and current_user.id == user.id %}
@@ -50,7 +103,7 @@
       </div>
       <div class="project-card-content">
         <h4 class="project-card-title">{{ p.title }}</h4>
-        <p class="project-card-description">{{ p.description[:140] }}{% if p.description|length > 140 %}...{% endif %}</p>
+        <p class="project-card-description">{{ (p.description or '')[:140] }}{% if p.description and p.description|length > 140 %}...{% endif %}</p>
         <p class="text-muted small">📅 {{ p.date_posted.strftime('%b %d, %Y') }}</p>
       </div>
       {% if current_user.is_authenticated and current_user.id == user.id %}

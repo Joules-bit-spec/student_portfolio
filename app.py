@@ -14,11 +14,11 @@ from reportlab.lib.styles import getSampleStyleSheet
 # -----------------------
 # App Configuration
 # -----------------------
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///portfolio.db'
 app.config['SECRET_KEY'] = 'replace_with_your_secret_key'
 app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
-app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024  # 2 MB max upload
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 MB max upload
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 # Create upload folder
@@ -40,6 +40,14 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(200), nullable=False)
     course = db.Column(db.String(100))
     bio = db.Column(db.Text)
+    profile_picture = db.Column(db.String(255))
+    # Contact Information
+    phone = db.Column(db.String(20))
+    address = db.Column(db.Text)
+    # Professional Info
+    skills = db.Column(db.Text)  # Comma-separated or newline-separated
+    experience = db.Column(db.Text)  # Detailed experience description
+    education = db.Column(db.Text)  # Education details
     is_admin = db.Column(db.Boolean, default=False)
 
 class Project(db.Model):
@@ -125,6 +133,22 @@ def profile():
         current_user.username = request.form['username']
         current_user.course = request.form['course']
         current_user.bio = request.form['bio']
+        current_user.phone = request.form.get('phone', '')
+        current_user.address = request.form.get('address', '')
+        current_user.skills = request.form.get('skills', '')
+        current_user.experience = request.form.get('experience', '')
+        current_user.education = request.form.get('education', '')
+        
+        # Handle profile picture upload
+        if 'profile_picture' in request.files:
+            file = request.files['profile_picture']
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                # Add timestamp to filename to avoid conflicts
+                filename = f"profile_{current_user.id}_{datetime.utcnow().timestamp()}_{filename}"
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                current_user.profile_picture = filename
+        
         db.session.commit()
         flash('Profile updated.', 'success')
         return redirect(url_for('profile'))
