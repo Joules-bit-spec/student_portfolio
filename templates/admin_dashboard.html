@@ -22,14 +22,14 @@
   <h3>Users</h3>
   <div style="overflow-x: auto;">
     <table style="width: 100%; border-collapse: collapse;">
-      <tr style="background-color: #f5f5f5; font-weight: 600;">
-        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">ID</th>
-        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Username</th>
-        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Email</th>
-        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Course</th>
+      <tr style="background-color: var(--background); font-weight: 600;">
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--muted);">ID</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--muted);">Username</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--muted);">Email</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--muted);">Course</th>
       </tr>
       {% for u in users %}
-      <tr style="border-bottom: 1px solid #ddd;">
+      <tr style="border-bottom: 1px solid var(--muted);">
         <td style="padding: 12px;">{{ u.id }}</td>
         <td style="padding: 12px;">{{ u.username }}</td>
         <td style="padding: 12px;">{{ u.email }}</td>
@@ -45,14 +45,14 @@
   <h3>All Projects</h3>
   <div style="overflow-x: auto;">
     <table style="width: 100%; border-collapse: collapse;">
-      <tr style="background-color: #f5f5f5; font-weight: 600;">
-        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">ID</th>
-        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Title</th>
-        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Owner</th>
-        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Date</th>
+      <tr style="background-color: var(--background); font-weight: 600;">
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--muted);">ID</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--muted);">Title</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--muted);">Owner</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--muted);">Date</th>
       </tr>
       {% for p in projects %}
-      <tr style="border-bottom: 1px solid #ddd;">
+      <tr style="border-bottom: 1px solid var(--muted);">
         <td style="padding: 12px;">{{ p.id }}</td>
         <td style="padding: 12px;">{{ p.title }}</td>
         <td style="padding: 12px;">{{ p.user_id }}</td>

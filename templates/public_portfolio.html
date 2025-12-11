@@ -5,55 +5,59 @@
 {% block content %}
 <div class="container">
   <!-- Header -->
-  <div class="profile-header" style="margin-bottom:18px; display:flex; align-items:center; gap:20px;">
+  <div class="profile-header" style="margin-bottom:16px; display:flex; align-items:center; gap:16px;">
     {% if user.profile_picture %}
-    <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="{{ user.username }}" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:3px solid #D4AF37; flex-shrink:0;" />
+    <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="{{ user.username }}" style="width:90px; height:90px; border-radius:50%; object-fit:cover; border:3px solid var(--accent-color); flex-shrink:0;" />
+    {% else %}
+    <div style="width:90px; height:90px; border-radius:50%; background:linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%); display:flex; align-items:center; justify-content:center; color:white; font-size:40px; font-weight:bold; flex-shrink:0;">
+      {{ (user.username or 'U')[:1].upper() }}
+    </div>
     {% endif %}
     <div>
-      <h1 style="margin:0 0 6px 0;">{{ user.username }}'s Portfolio</h1>
+      <h1 style="margin:0 0 4px 0;">{{ user.username }}'s Portfolio</h1>
       <p class="text-muted" style="margin:0;">{{ user.course or 'Student' }}</p>
       {% if user.bio %}
-      <p style="max-width:640px; margin:8px 0 0 0; color:var(--dark-text);">{{ user.bio }}</p>
+      <p style="max-width:600px; margin:6px 0 0 0; color:var(--muted); font-size:14px;">{{ user.bio }}</p>
       {% endif %}
     </div>
   </div>
 
   <!-- Contact & Professional Information Section -->
-  <div class="card" style="margin-bottom:24px; background: linear-gradient(135deg, #D4AF37 0%, #F4E4B9 100%);">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+  <div class="card" style="margin-bottom:24px; background:#f1f5f9; border:1px solid #e2e8f0;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
       {% if user.phone or user.address or user.email %}
       <div>
-        <h4 style="margin: 0 0 12px 0; color: var(--primary-color);">📞 Contact Information</h4>
+        <h4 style="margin: 0 0 12px 0; color: var(--primary-color); font-weight:700;">📞 Contact</h4>
         {% if user.phone %}
-        <p style="margin: 0 0 8px 0;"><strong>Phone:</strong> {{ user.phone }}</p>
+        <p style="margin: 0 0 6px 0; font-size:14px;"><strong>Phone:</strong> {{ user.phone }}</p>
         {% endif %}
         {% if user.email %}
-        <p style="margin: 0 0 8px 0;"><strong>Email:</strong> <a href="mailto:{{ user.email }}" style="color: var(--primary-color); text-decoration: underline;">{{ user.email }}</a></p>
+        <p style="margin: 0 0 6px 0; font-size:14px;"><strong>Email:</strong> <a href="mailto:{{ user.email }}" style="color: var(--primary-color); text-decoration: underline;">{{ user.email }}</a></p>
         {% endif %}
         {% if user.address %}
-        <p style="margin: 0; color: #666;"><strong>Address:</strong><br>{{ user.address }}</p>
+        <p style="margin: 0; font-size:14px; color:var(--muted);"><strong>Address:</strong><br>{{ user.address }}</p>
         {% endif %}
       </div>
       {% endif %}
 
       {% if user.education %}
       <div>
-        <h4 style="margin: 0 0 12px 0; color: var(--primary-color);">🎓 Education</h4>
-        <p style="margin: 0; color: #666; white-space: pre-line;">{{ user.education }}</p>
+        <h4 style="margin: 0 0 12px 0; color: var(--primary-color); font-weight:700;">🎓 Education</h4>
+        <p style="margin: 0; color: var(--muted); white-space: pre-line; font-size:14px; line-height:1.5;">{{ user.education }}</p>
       </div>
       {% endif %}
     </div>
 
     {% if user.skills %}
-    <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid rgba(139, 111, 71, 0.2);">
-      <h4 style="margin: 0 0 12px 0; color: var(--primary-color);">💡 Skills</h4>
-      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+      <h4 style="margin: 0 0 10px 0; color: var(--primary-color); font-weight:700;">💡 Skills</h4>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
         {% for skill in user.skills.split('\n') if skill.strip() %}
-        <span style="background: rgba(139, 111, 71, 0.2); color: var(--primary-color); padding: 8px 14px; border-radius: 20px; font-size: 14px; font-weight: 600;">{{ skill.strip() }}</span>
+        <span style="background: #f1f5f9; color: var(--primary-color); padding: 6px 12px; border-radius: 16px; font-size: 13px; font-weight: 600;">{{ skill.strip() }}</span>
         {% endfor %}
         {% if '\n' not in user.skills %}
           {% for skill in user.skills.split(',') if skill.strip() %}
-          <span style="background: rgba(139, 111, 71, 0.2); color: var(--primary-color); padding: 8px 14px; border-radius: 20px; font-size: 14px; font-weight: 600;">{{ skill.strip() }}</span>
+          <span style="background: #f1f5f9; color: var(--primary-color); padding: 6px 12px; border-radius: 16px; font-size: 13px; font-weight: 600;">{{ skill.strip() }}</span>
           {% endfor %}
         {% endif %}
       </div>
@@ -61,16 +65,16 @@
     {% endif %}
 
     {% if user.experience %}
-    <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid rgba(139, 111, 71, 0.2);">
-      <h4 style="margin: 0 0 12px 0; color: var(--primary-color);">💼 Experience</h4>
-      <p style="margin: 0; color: #666; white-space: pre-line; line-height: 1.6;">{{ user.experience }}</p>
+    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+      <h4 style="margin: 0 0 10px 0; color: var(--primary-color); font-weight:700;">💼 Experience</h4>
+      <p style="margin: 0; color: var(--muted); white-space: pre-line; line-height: 1.5; font-size:14px;">{{ user.experience }}</p>
     </div>
     {% endif %}
   </div>
 
   {# Removed owner-only Add New Project form to keep public portfolio view read-only #}
 
-  <h3 style="margin-bottom:12px;">Projects</h3>
+  <h3 style="margin-bottom:12px; color:var(--primary-color);">Projects</h3>
   {% if projects %}
   <div class="projects-grid">
     {% for p in projects %}
