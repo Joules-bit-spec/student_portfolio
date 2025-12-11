@@ -7,7 +7,7 @@
     {% if current_user.profile_picture %}
     <img src="{{ url_for('static', filename='uploads/' + current_user.profile_picture) }}" alt="{{ current_user.username }}" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin:0 auto 12px; border:3px solid #D4AF37; box-shadow:0 4px 12px rgba(0,0,0,0.15);" />
     {% else %}
-    <div class="profile-avatar" style="margin: 0 auto 12px; background: linear-gradient(135deg, #8B6F47 0%, #D4AF37 100%); color: white; font-size: 44px; font-weight: bold; display:flex; align-items:center; justify-content:center;">{{ current_user.username[0].upper() }}</div>
+  <div class="profile-avatar" style="margin: 0 auto 12px; background: linear-gradient(135deg, #8B6F47 0%, #D4AF37 100%); color: white; font-size: 44px; font-weight: bold; display:flex; align-items:center; justify-content:center;">{{ (current_user.username or 'U')[:1].upper() }}</div>
     {% endif %}
     <h2 style="margin: 0 0 5px 0;">{{ current_user.username }}</h2>
     <p class="profile-bio" style="margin: 0;">{{ current_user.course or 'Student' }}</p>

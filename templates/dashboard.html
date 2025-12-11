@@ -16,7 +16,7 @@
       <p>Status: Active</p>
     </div>
     <div class="stat-card">
-      <h3>{{ current_user.course[:10] or 'N/A' }}</h3>
+      <h3>{{ (current_user.course or 'N/A')[:10] }}</h3>
       <p>Course</p>
     </div>
   </div>
@@ -35,7 +35,7 @@
       <img src="{{ url_for('static', filename='uploads/' + current_user.profile_picture) }}" alt="{{ current_user.username }}" style="width:80px; height:80px; border-radius:50%; object-fit:cover; flex-shrink:0; border:3px solid #8B6F47;" />
       {% else %}
       <div style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, #8B6F47 0%, #D4AF37 100%); display:flex; align-items:center; justify-content:center; color:white; font-size:36px; font-weight:bold; flex-shrink:0;">
-        {{ current_user.username[0].upper() }}
+        {{ (current_user.username or 'U')[:1].upper() }}
       </div>
       {% endif %}
       <div style="flex:1;">
